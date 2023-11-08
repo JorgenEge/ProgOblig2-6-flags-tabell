@@ -31,7 +31,7 @@ end
 #Anvender funksjonen energi-to-number, og viser tabellen med transform
 transform-table = transform-column(kWh-wealthy-consumer-data,
   "energi", energi-to-number)
-print(transform-table)
+transform-table
 
 
 #Funksjon for å regne energi for bil per dag, der distance travelled og distance per unit fuel er variabler
@@ -51,12 +51,12 @@ energy-per-unit-of-fuel = 5
 total-energy-per-day =sum(transform-table, "energi") + car-energy-per-day(distance-per-day, distance-per-liter, energy-per-unit-of-fuel)
 
 #Oppdatert tabell
-print(total-energy-per-day)
+total-energy-per-day
 
 #Lager en tabell for å visualisere energiforbruket
 bar-chart(transform-table, "komponent", "energi")
 
-
+#Lager en funksjon som oppdaterer energiforbruket for bil fra 0 til 10
 fun energi-to-number-with-car(str :: String) -> Number:
   cases(Option) string-to-number(str):
     |some(a) => a
@@ -67,6 +67,9 @@ where:
   energi-to-number("48") is 48
 end
   
+
+#Visualiserer en ny tabel som anvender funksjonen over for å få en verdi til bil i en ny tabell
+#Visualiserer den nye verdien fra tabellen i et chart
 transformed-table-with-car = transform-column(kWh-wealthy-consumer-data, "energi", energi-to-number-with-car)
-  print(transformed-table-with-car)
+  transformed-table-with-car
   bar-chart(transformed-table-with-car, "komponent", "energi")
